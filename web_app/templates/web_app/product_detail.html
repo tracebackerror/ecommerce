@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<link rel="stylesheet" href="/static/css/contetDetails.css">
+{% endblock style %}
+
+
+{% block body %}
+<div id="containerProduct">
+    <!-- JS rendered code -->
+    <div id="containerD">
+        <div id="imageSection"><img id="imgDetails"
+                src="{{product.thumbnail.url}}">
+        </div>
+        <div id="productDetails">
+            <h1>{{product.title}}</h1>
+            <h4>{{product.category}} | {{product.brand}}</h4>
+            <div id="details">
+                <h3>Rs {{product.price}}</h3>
+                <h3>Description</h3>
+                <p>{{product.description}}</p>
+            </div>
+            <div id="productPreview">
+                <h3>Product Preview</h3>
+                {% for obj in product.images.all %}
+                <img onclick="previewImg('{{obj.image.url}}')" src="{{obj.image.url}}">
+                {% endfor %}
+            </div>
+            <form method="post" style="display: flex;">
+                {% csrf_token %}
+                <input value="1" style="margin-right: 10px; text-align: center;" min="1" max="99" type="number" name="quantity" placeholder="Quantity">
+                <div id="button"><button type="submit">Add to Cart</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+
+
+{% block script %}
+<script>
+    function previewImg(src)
+        {
+            document.getElementById("imgDetails").src = src;            
+        }
+</script>
+{% endblock script %}

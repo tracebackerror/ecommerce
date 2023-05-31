@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<link rel="stylesheet" href="/static/css/content.css">
+{% endblock style %}
+
+
+{% block body %}
+<section>
+    <div id="containerSlider">
+        <div id="slidingImage"> <img src="/static/img/img1.png" alt="image1"> </div>
+        <div id="slidingImage"> <img src="/static/img/img2.png" alt="image2"> </div>
+        <div id="slidingImage"> <img src="/static/img/img3.png" alt="image3"> </div>
+        <div id="slidingImage"> <img src="/static/img/img4.png" alt="image4"> </div>
+    </div>
+</section>
+
+
+<div id="mainContainer">
+
+    {% for category,data in category_data_mapping %}
+    <h1 id="{{category.slug}}"> {{category.title}} for men and women </h1>
+    <div id="containerClothing">
+        {% for product in data %}
+        <div id="box"><a href="/product/{{product.slug}}/">
+            <img src="{{product.thumbnail.url}}">
+                <div id="details">
+                    <h3>{{product.title}}</h3>
+                    <h4>{{product.brand}}</h4>
+                    <h2>rs {{product.price}}</h2>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}
+
+
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('#containerSlider').slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+        });
+    });
+</script>
+{% endblock script %}

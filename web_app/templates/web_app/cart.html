@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<link rel="stylesheet" href="/static/css/cart.css">
+{% endblock style %}
+
+
+{% block body %}
+<div id="cartMainContainer">
+    <h1> Checkout </h1>
+    <h3 id="totalItem">Total Items: {{cart_count}}</h3>
+
+    <div id="cartContainer">
+        <!-- JS rendered code -->
+        <div id="boxContainer">
+            {% for cart in carts %}
+            <div id="box">
+                <img src="{{cart.product.thumbnail.url}}">
+                <h3>{{cart.product.title}} × {{cart.quantity}}</h3>
+                <h4>Amount: Rs {{cart.product.price}}</h4>
+                <a href="/cart/delete/{{cart.id}}/"><i class="fas fa-trash"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="totalContainer">
+            <div id="total">
+                <h2>Total Amount</h2>
+                <h4>Amount: Rs 18597</h4>
+                <div id="button"><button><a href="/orderPlaced.html?">Place Order</a></button></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock body %}
+
+
+
+{% block script %}
+
+{% endblock script %}
