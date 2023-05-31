@@ -22,17 +22,56 @@
                 <a href="/cart/delete/{{cart.id}}/"><i class="fas fa-trash"></i></a>
             </div>
             {% endfor %}
+            <a href="/" style="color: black; text-decoration: none;">
+                <i class="fas fa-arrow-circle-left    "></i>
+                Continue Shopping
+            </a>
         </div>
+
         <div id="totalContainer">
             <div id="total">
-                <h2>Total Amount</h2>
-                <h4>Amount: Rs 18597</h4>
-                <div id="button"><button><a href="/orderPlaced.html?">Place Order</a></button></div>
+                <h2>Cart Total</h2>
+                <table style="width: 100%;">
+                    {% for cart in carts %}
+                    <tr>
+                        <td>{{cart.product.title|truncatechars:"20"}}</td>
+                        <td>Rs.{{cart.product.price}} × {{cart.quantity}}</td>
+                        <td>Rs.{{cart.total_price}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2">Shipping Charges</td>
+                        <td>FREE</td>
+                    </tr>
+                    <tr style="font-size: large;">
+                        <th colspan="2">Total Amount</th>
+                        <th>Rs.{{total_amount}}</th>
+                    </tr>
+                </table>
+
+                <h2>Shipping Address</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for address in request.user.addresses.all %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="address"
+                            id="flexRadioDefault{{address.id}}" value="{{address.id}}" {% if forloop.counter == 1 %}checked{% endif %}>
+                        <label class="form-check-label" for="flexRadioDefault{{address.id}}">
+                            {{address}}
+                        </label>
+                    </div>
+                    <br>
+                    {% endfor %}
+                    <br><br>
+                    {% if request.user.addresses.all %}
+                    <div id="button"><button type="submit" style="color: white;">Place Order</button></div>
+                    {% else %}
+                    <div id="button"><button type="button" style="color: white;"><a href="/user/profile/" style="text-decoration: none;">Add Address</a></button></div>
+                    {% endif %}
+                </form>
             </div>
         </div>
     </div>
-
-</div>
 </div>
 {% endblock body %}
 

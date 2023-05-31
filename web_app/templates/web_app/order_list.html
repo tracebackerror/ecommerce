@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+{% endblock style %}
+
+
+{% block body %}
+<br><br><br><br><br><br>
+<div class="container">
+    <h2 style="font-weight: bold;">Hi, {{request.user}}</h2>
+    <br>
+    <strong>My Orders</strong>
+    <table class="table table-bordered table-striped mt-2">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Image</th>
+                <th scope="col">Qty.</th>
+                <th scope="col">Ordered Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Cancel Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{obj.product.title}}</td>
+                <td><img style="width: 100px;height: 100px;" src="{{obj.product.thumbnail.url}}"></td>
+                <td>{{obj.quantity}}</td>
+                <td>{{obj.product.created_at}}</td>
+                <td>{{obj.status}}</td>
+                <td>
+                    {% if obj.status != "Cancelled" %}
+                    <a href="/order/delete/{{obj.id}}/"><i class="fas fa-times"></i></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add Address</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btnbtn btn-dark w-100" type="submit">Add</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock script %}

@@ -25,6 +25,14 @@
     word-spacing: 1px;
 }
 
+button {
+    padding: 8px 12px;
+    background-color: rgb(3, 122, 122);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* ----------------------------- MEDIA QUERY --------------------------- */
 
 @media(max-width: 700px)

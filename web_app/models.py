@@ -12,7 +12,7 @@ class Address(models.Model):
     country = models.CharField(max_length=150, verbose_name="Country", default="India")
 
     def __str__(self):
-        return self.locality
+        return f"{self.locality}, {self.city}, {self.state}, {self.pincode}, {self.country}"
     
 
 class Category(models.Model):
